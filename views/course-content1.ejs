@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="./universal.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/course-content-styles.css" />
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Course content</title>
+</head>
+<body>
+    <topbar-component></topbar-component>
+    <%
+        let chapterNumbers = [];
+        for(const property in content) {
+            chapterNumbers.push(content[property].chapterNumber);
+        }
+
+        var chapters = [];
+            for(const property in content) {
+                chapters.push(content[property].content);
+            }
+
+    %>
+    <div class="container">
+        <div class="content">
+            <div class="chapters">
+                <% for(let chapter = 0; chapter < chapterNumbers.length-1; chapter++){  %>
+                    <button onclick="change('<%= chapterNumbers[chapter] %>')"><%= chapter+1 %></button>
+                <% } %>
+            </div>
+            <div id="chapter-content">
+                <% if(content) { %>
+                    <p><%= content[5].content %></p>
+                <%}%>
+            </div>
+            <form action="/quiz" method="post">
+                <input type="hidden" name = "quizId" value = <%= content[0].courseId %>>
+                <input type="hidden" name = "courseNumber" value = <%= content[0].courseNumber %>>
+                <button id="btn_quiz" type="submit" hidden>Quiz</button>
+            </form>
+        </div>
+    </div>    
+    <!-- <script>
+        let button = document.querySelector(".button");
+        button.disabled = true;
+        input.addEventListener("change", stateHandle);
+
+        function stateHandle() {
+            if(document.querySelector(".input").value === "") {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        }
+    </script> -->
+</body>
+    <script>
+        function change(i) {
+            chapters = [];
+            chapters[0] = '<%= content[0].content %>';
+            chapters[1] = '<%= content[1].content %>';
+            chapters[2] = '<%= content[2].content %>';
+            chapters[3] = '<%= content[3].content %>';
+            chapters[4] = '<%= content[4].content %>';
+            chapters[5] = '<%= content[5].content %>';
+            
+
+            document.getElementById("chapter-content").innerHTML = chapters[i-1];
+            var img = document.createElement("img");
+            img.src = "/images/chapter1." + i + ".png";
+            var src = document.getElementById("chapter-content");
+            src.appendChild(img);
+
+            let element = document.getElementById("btn_quiz");
+            let hidden = element.getAttribute("hidden");
+
+            if (5 == parseInt(i)) {
+                element.removeAttribute("hidden");
+            } else {
+                element.setAttribute("hidden", "hidden");
+            }
+        }
+    </script>
+</html>

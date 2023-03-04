@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="./universal.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/course-content-styles.css" />
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+
+<!-- do kodu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <title>Course content</title>
+</head>
+<body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+    <%
+        let chapterNumbers = [];
+        for(const property in content) {
+            chapterNumbers.push(content[property].chapterNumber);
+        }
+
+        var chapters = [];
+            for(const property in content) {
+                chapters.push(content[property].content);
+            }
+    %>
+    <div class="container">
+        <div id="chapters">
+            <% for(let chapter = 0; chapter < chapterNumbers.length; chapter++){  %>
+            <form action="/course/<%= course[courseNumber]._id %>/<%= chapter %>" method="GET">
+                    <% if(userProgress+1 > chapter){ %>
+                        <input id="chapter-button" type="submit" name="chapter" value=<%= chapter+1 %> />
+                    <% } else {%>
+                        <input id="chapter-button" class="disabled" type="submit" name="chapter" value=<%= chapter+1 %> disabled/>
+                    <% }%>    
+            </form>
+            <% } %>
+        </div>
+        <div class="content">
+            <h1 style="font-style: italic; text-decoration: underline; color:blue"><%= course[courseNumber].courseName %></h1>
+            <div id="course_data">
+                    <%//console.log("chapter: " + selectedChapter)%>
+                    <p> <%= content[selectedChapter].content %> </p>
+                <% if(selectedChapter < 5){ %>
+                    <!-- <img src=<%= "/images/chapter" + (courseNumber + 1) + "." + selectedChapter + ".png" %>>      -->
+                <% } %>
+            </div>
+            <!-- <iframe src="https://trinket.io/embed/python3/ef44e9dc5e" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>             -->
+            <!-- <iframe src="https://www.brython.info/tests/editor.html?lang=en&code=for%20i%20in%20range%2810%29%3A%0A%09print%28i%29" width="800" height="400"></iframe> -->
+            <!-- <iframe frameborder="0" width="100%" height="400px" src="https://create.withcode.uk/"><a target="_blank" href="https://create.withcode.uk/">create.withcode.uk</a></iframe> -->
+            <!-- <//% console.log(content[selectedChapter]) %> -->
+            <%if(content[selectedChapter].url){%>
+                <iframe src="<%= content[selectedChapter].url %>" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+            <% } %>
+            <% if(userProgress != content.length){ %>
+            <div id="course_question">
+                <pre>
+                    
+                    <code>
+<% content[selectedChapter].code.forEach((line)=>{ %>
+<%= line %>
+<%})%>
+                    </code>
+                </pre>
+                <p><%= content[selectedChapter].question %><p>
+                    <form action="/api/check_quiz_answer" method="POST">
+                        <input type="text" name="answer">
+                        <input type="hidden" name="contentId" value = <%= content[selectedChapter]._id %>>
+                        <input type="hidden" name="courseId" value = <%= content[selectedChapter].courseId %>>
+                        <input type="hidden" name="content" value = <%= content %>>
+                        <input type="hidden" name="userProgress" value= <%= userProgress %>>
+                        <input type="hidden" name="chapterNumber" value = <%= selectedChapter %> >
+                        <input type="hidden" name="courseNumber" value = <%= courseNumber %>>
+                        <button id="btn-send"type="submit">Wyślij odpowiedź</button>
+                    </form>
+            </div>
+            <% } %>
+            <% if(userProgress == content.length-1){ %>
+            <form action="/quiz" method="post">
+                <input type="hidden" name="quizId" value = <%= content[0].courseId %>>
+                <input type="hidden" name="courseNumber" value = <%= content[0].courseNumber %>>
+                <button id="btn-quiz" type="submit">Quiz</button>
+            </form>
+            <% } %>
+        </div>
+    </div>    
+</body>
+</html>

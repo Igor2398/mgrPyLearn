@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./leaderboard-styles.css" />
+    <link rel="stylesheet" type="text/css" href="./universal.css" />
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+    <%  let challangedFactor = 1;
+        let challangingFactor = 1; %>
+    <div class="leaderboard">
+      <h1>Ranking obserwowanych graczy: </h1> <button id="btn-change-board">Ranking ogólny</button>
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td>Gracz</td>
+            <td>Punkty</td>
+            <td>Wsp. zysku</td>
+            <td>Wsp. straty</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% content.forEach( (item, index)=>{ %>
+            <% if(item._id == currentUserId) { %>
+          <tr style="background-color: #0066CC;">
+            <% } else { %>
+              <tr>
+              <% } %> 
+            <td id="winner"><%= index + 1 %></td>
+            <td>
+              <img src="images/profile1.jpeg" />
+              <p><%= item.userName %>
+              <!-- <form action="/api/challange?_method=PUT" method="POST"> -->
+                <!-- <input type="hidden" name="id" value=<%= //item.id %>>  -->
+                <!-- <input type="hidden" name="firstName" value="<%=// item.firstName %>">  -->
+                <% if(currentUserId != item.id) { %>
+                  <i title="Challange <%= item.firstName %>" type="submit" class="fa fa-bolt fa-lg" onclick='openForm("<%= item.id %>", "<%= item.userName %>")'></i>
+                <% } %>
+              </p>
+              <!-- </form> -->
+            </td>
+            <td><%= item.points %></td>
+            <% if((item.progress / currentUserProgress).toFixed(2) >= 1) { %>
+              <td><%= ((item.progress / currentUserProgress)).toFixed(2) %></td>
+            <% } else {%>
+              <td>1.00</td>
+            <% } %>
+
+            <% if((currentUserProgress / item.progress).toFixed(2) >= 1 && item.progress != 0) { %>
+              <td><%= (currentUserProgress / item.progress).toFixed(2) %></td>
+            <% } else {%>
+              <td><%= (1).toFixed(2) %></td>
+            <% } %>
+
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="stake-popup">
+      <div class="popup-content" id="popupForm">
+        <form action="/api/challange?_method=PUT" method="POST" class="form-container">
+          <h2>O ile punktów chcesz zagrać?</h2>
+          <label for="stake">
+            <strong>Stawka punktowa: </strong>
+          </label>
+          <input type="hidden" id="pass-id" name="id"> 
+          <input type="hidden" id="pass-name" name="firstName"> 
+          <input type="number" min="10" max="100" id="stake" placeholder="Stawka" name="stake" required>
+          <button type="submit" class="btn">Rzuć wyzwanie</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Zamknij</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      function openForm(userId, firstName) {
+        document.getElementById("popupForm").style.display = "block";
+        document.getElementById("pass-id").value = userId;
+        document.getElementById("pass-name").value = firstName;
+      }
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

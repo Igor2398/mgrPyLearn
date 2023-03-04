@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./index-styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./universal.css" />
+    <title>mgrApp-Register</title>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="left-form">
+        <header>
+          <h1>Posiadasz konto?</h1>
+          <b> Zaloguj się <a href="/"> tutaj </a></b>
+        </header>
+      </div>
+      <div class="right-form">
+        <h1>Rejestracja</h1>
+      <form action="/api/register" method="POST">
+        <span class="fa fa-at" style="font-size:20px"><input name="firstName" type="firstName" id="firstName" placeholder="Imię" /> </span>
+        <span class="fa fa-at" style="font-size:20px"><input name="lastName" type="lastName" id="lastName" placeholder="Nazwisko" /> </span>
+        <span class="fa fa-at" style="font-size:20px"><input name="userName" type="userName" id="userName" placeholder="Nazwa uzytkownika" /> </span>
+        <span class="fa fa-at" style="font-size:20px"><input name="email" type="email" id="email" placeholder="Email" /> </span>
+        <span class="fa fa-lock" style="font-size:20px"><input name="password" type="password" id="password" placeholder="Hasło"/></span>
+        <button type="submit">Register</button>
+    </div>
+      </form>
+    </div>
+  </body>
+</html>

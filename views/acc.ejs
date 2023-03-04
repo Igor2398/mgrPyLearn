@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./account-styles.css" />
+    <link rel="stylesheet" type="text/css" href="./universal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <script src="./topbar.js" type="text/javascript" defer></script> -->
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+
+<h1><%= data.message %></h1>
+
+<div id="fact">
+    <h1 style="color: #7343ac;">Dlaczego warto uczyć się Pythona? 🤔 </h1>
+    <h2> <%= data.tip.tipTitle %> </h2>
+    <p><%= data.tip.tipText %></p>
+</div>
+
+</body>
+</html>

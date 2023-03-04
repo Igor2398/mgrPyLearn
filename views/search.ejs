@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/universal.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/leaderboard-styles.css" /> -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" type="text/css" href="/search-styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+    <div class="leaderboard">
+      <h1>Search results: </h1>
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td>Nazwa użytkownika </td>
+            <td>Punkty</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.result.forEach( (item, index)=>{ %>
+          <tr>
+            <td id="winner"><%= index + 1 %></td>
+            <td>
+              <div class="search-content">
+              <img src="/images/profile1.jpeg" />
+              <!-- <p><%= //item.firstName + " " + item.lastName %></p> -->
+              <p><%= item.userName %></p>
+              <% if(!Object.values(item.followers).includes(data.currentUserId)) {%>
+                <form action="/api/follow?_method=PUT" method="POST">
+                  <input type="hidden" name="id" value=<%= item.id %>>
+                  <input type="hidden" name="firstName" value="<%= item.firstName %>">
+                  <!-- <input type="submit" value="Follow" class="follow-button"> -->
+                  <button title="Follow <%= item.firstName %>" type="submit" class="fa fa-check-circle-o follow-button"></button>
+                </form>
+                <% } else{ %>
+                  <form action="/api/unfollow?_method=PUT" method="POST"> 
+                    <input type="hidden" name="id" value=<%= item.id %>> 
+                    <input type="hidden" name="firstName" value="<%= item.firstName %>"> 
+                    <!-- <input type="submit" value="Unfollow" class="follow-button"> -->
+                    <button title="Unfollow <%= item.firstName %>" type="submit" class="fa fa-check-circle follow-button"></button>
+                  </form>
+                  <form action="/api/challange?_method=PUT" method="POST">
+                    <input type="hidden" name="id" value=<%= item.id %>> 
+                    <input type="hidden" name="firstName" value="<%= item.firstName %>"> 
+                    <!-- <button title="Challange <%= item.firstName %>" type="submit" class="fa fa-bolt"></button> -->
+                  </form>
+               <% } %>
+              </div>
+            </td>
+            <td><p> <%= item.points %></p> </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

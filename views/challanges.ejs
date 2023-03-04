@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/challanges-styles.css" />
+    <link rel="stylesheet" type="text/css" href="/universal.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Wyzwania</title>
+</head>
+<body>
+  <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+  <% //console.log(JSON.stringify(challanges)) %>
+    <% if(userChallanges.length > 0){%>
+    <div class="leaderboard">
+        <table>
+          <thead>
+            <tr>
+              <td></td>
+              <td>Name</td>
+              <td>UserName</td>
+              <td>Stawka</td>
+              <td>Accept</td>
+              <td>Decline</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% userChallanges.forEach( (item, index)=>{ %>
+            <tr>
+              <td id="winner"><%= index + 1 %></td>
+              <td>
+                <div class="search-content">
+                    <img src="/images/profile1.jpeg" />
+                    <p><%= item.firstName + " " + item.lastName %></p>
+                </div>
+              </td>
+              <td><p> <%= item.userName %></p> </td>
+              <td> <p> <%= challanges[0].challanges.find(obj=> obj.id === item._id.toString()).stake %> </p> </td>
+              <td> 
+                <form action="/api/challange/response?_method=PUT" method="POST"> 
+                    <input type="hidden" name="currentUserId" value=<%= currentUserId %>> 
+                    <input type="hidden" name="userId" value=<%= item.id %>>
+                    <input type="hidden" name="stake" value=<%= challanges[0].challanges.find(obj=> obj.id === item._id.toString()).stake %>>
+                    <input type="hidden" name="response" value="Accept">
+                    <button title="Accept challange from <%= item.firstName %>" type="submit" class="fa fa-check-square-o"></button>
+                  </form>
+              </td>
+            <td>
+                <form action="/api/challange/response?_method=PUT" method="POST">
+                    <input type="hidden" name="currentUserId" value=<%= currentUserId %>> 
+                    <input type="hidden" name="userId" value=<%= item.id %>> 
+                    <input type="hidden" name="response" value="Decline">
+                    <button title="Decline chalange from <%= item.firstName %>" type="submit" class="fa fa-times"></button>
+                </form>
+            </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <%} else {%>
+        <div id="back">
+          <h1>Obecnie nikt nie wyzwał Cię na pojedynek</h1>
+        </div>
+      <%}%>
+</body>
+</html>

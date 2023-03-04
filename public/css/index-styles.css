@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+button {
+  width: 10vw;
+  height: 5vh;
+  background-color: #8ec5fc;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-top: 30px;
+}
+
+input {
+  border-radius: 10px;
+  padding: 5px;
+  width: 20vw;
+  height: 4vh;
+  margin: 1vh;
+  outline: none;
+  border: 1px solid black;
+  background: none;
+}
+
+.fa-solid {
+  color: black;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container {
+  width: 50vw;
+  height: 65vh;
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.right-form,
+.left-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-form {
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+  width: 20vw;
+}
+
+.right-form {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: whitesmoke;
+  width: 30vw;
+}
+
+button:hover {
+  background-color: #85ffbd;
+}
+
+input:focus {
+  border: 2px solid #85ffbd;
+  padding: 10px;
+}

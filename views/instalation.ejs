@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./account-styles.css" />
+    <link rel="stylesheet" type="text/css" href="./universal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <script src="./topbar.js" type="text/javascript" defer></script> -->
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Document</title>
+</head>
+<body>
+
+<topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+
+<div id="factt">
+    <h1 id="fact-title" style="color: #7343ac;">Instalacja </h1>
+    <h2> Jak zainstalowac pythona </h2>
+    <p>
+        Aby zacząć tworzyć programy w języku Python, należy zainstalować darmową aplikację Python, którą można pobrać bezpośrednio ze strony internetowej tego środowiska programistycznego.
+        Wchodzimy w tym celu na stronę <a href="python.org">python.org</a> i sekcji Downloads pobieramy aktualnie najnowszą wersję Pythona w zależności od wersji systemu Windows 32 lub 64 bitową, na zrzucie ekranu zaznaczona jest wersja 64 bitowa, druga z nich znajduje się wiersz wyżej:
+    </p>
+    <img src="/images/instalacja1.jpeg" style="margin-left: 20vw;">
+    <p>
+        Uruchamiamy pobrany plik i wybierając odpowiednie opcje, instalujemy Pythona na naszym komputerze. Po tej czynności można już zacząć programowanie z wykorzystaniem interpretera lub wbudowanego IDLE.
+        Żeby sprawdzić, czy wszystko działa poprawnie, możemy uruchomić interpreter (nazywany też trybem interaktywnym) Pythona, wyszukując w Menu Start frazę „Python”.
+    </p>
+    <img src="/images/instalacja2.jpeg" style="margin-left: 20vw;">
+    <p>
+        W oknie konsoli można wpisać teraz 2**4. Po wciśnięciu klawisza Enter, powinniśmy otrzymać wartość 16.
+    </p>
+    <img src="/images/instalacja3.jpeg" style="margin-left: 20vw;">
+    <p>
+        Podstawowym IDE (środowiskiem programowania) jest w Pythonie aplikacja o nazwie IDLE. Jest ona prosta w obsłudze i szybka w działaniu, ale z punktu widzenia użyteczności, o wiele lepszym wyborem będzie PyCharm – środowisko programistyczne przystosowane do pracy z językiem Python. To właśnie jego zachęcamy zainstalować jako domyślny edytor programów.
+        PyCharma pobierzemy ze strony <a href="jetbrains.com/pycharm">jetbrains.com/pycharm</a>. Przechodząc tam do sekcji Download, musimy jednak pamiętać, żeby wybrać wersję Community, która jest darmową dla prywatnego użytkownika. </p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" type="text/css" href="./quiz-styles.css" />
+    <link rel="stylesheet" type="text/css" href="./universal.css" />
+    <title>QUIZ</title>
+  </head>
+  <body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+    <% function shuffle(array) { 
+        let currentIndex = 4, randomIndex;
+        // While there remain elements to shuffle. 
+        while (currentIndex != 0) { 
+        //Pick a remaining element. 
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--; 
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [ array[randomIndex],
+        array[currentIndex]]; 
+        } 
+        return array; 
+    } 
+    let points = 0;
+    %>
+    <div class="container">
+      <div class="content">
+      <form action="/api/result?_method=PUT" method="POST"> 
+        <% content.forEach( (item,index)=>{ %>
+          <div class="question">
+                  <p><%= item.questionText %></p>
+                      <% item.options = shuffle(item.options); %> 
+                      <% item.options.forEach( (option, indeks) =>{ %>
+                  <input type="radio" name="<%= item._id %>" id="<%= option %>" class="answer" value="<%= option %>">
+                  <label for="<%= option %>"> <%= option %> </label>
+              <% }) %>
+          </div>
+        <% }) %>
+        <input type="hidden" name="gameId" value = "<%= gameId %>">
+        <input id = "btn_send" type="submit" value="Wyślij moje odpowiedzi"> </input>
+      </form>
+    </div>
+  </div>
+  </body>
+</html>

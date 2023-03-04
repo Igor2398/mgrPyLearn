@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.user-box {
+  background-color: black;
+  color: whitesmoke;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 30px;
+  height: 10vh;
+  margin: 5px;
+  border-left: 2px solid white;
+}
+
+input {
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  width: 10vw;
+  transition: 0.5s;
+}
+
+input:focus {
+  border: 1px solid white;
+  /* background-color: #393939; */
+  background-color: #5a78b5;
+  padding: 12px;
+  width: 20vw;
+}
+
+#fact {
+  width: 80vw;
+  padding: 20px;
+  background-color: rgba(245, 245, 245, 0.7);
+  border-radius: 5%;
+}
+
+#factt {
+  width: 80vw;
+  padding: 20px;
+  background-color: rgba(245, 245, 245, 0.7);
+  border-radius: 5%;
+}
+
+
+p, h2, h3, ul {
+  margin: 40px;
+}
+
+p {
+  font-size: large;
+}

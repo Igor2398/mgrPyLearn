@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./topbar.js" type="text/javascript" defer></script>
+    <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <script src="/components/chapter.js" type="text/javascript" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="https://www.wpromotions.eu/confetti.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./course-styles-test.css" />
+    <title>mgrApp</title>
+  </head>
+  <body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+
+    <div id="content">
+      <!-- <%//console.log(progress)%> -->
+        <div id="chapters">
+        <% course.forEach( (item, index)=>{ %>
+            <% if(progress[0].progress >= index) { %>
+              <a href="/course/<%= item._id %>" style="text-decoration: none; color: black;">
+            <% } else {%>
+              <a style="text-decoration: none; color: black; filter: grayscale(100%);">
+            <% } %>
+                <chapter-card
+                name="<%= item.courseName %>"
+                avatar="/images/<%= item.img %>"
+                >
+                <div slot="description"><%= item.courseDescription %></div>
+
+                  <div slot="meter" class="meter">
+                    <span style="max-width: 100%; width:<%= 100*progress[0].chaptersProgress[index]/5 %>%" id=<%= item._id%>></span>
+                  </div>
+                </chapter-card>
+            </a>
+        <% }) %>
+        <a style="text-decoration: none; color: black; filter: grayscale(100%);">
+          <chapter-card
+          name="Co dalej"
+          avatar="/images/question.png"
+          >
+          <div slot="description">Co zrobić ze zdobytą wiedzą?</div>
+        </chapter-card>
+        </a>
+        </div>
+    </div>
+    <!-- <div class="container">
+      <button class="build">test</button>
+    </div> -->
+    <% if(runConfetti){ %>
+    <script>
+      console.log();
+      const jsConfetti = new JSConfetti();
+
+      function confettiFY() {
+        jsConfetti.addConfetti({
+          confettiNumber: 5000,
+          confettiColors: [
+            "#a864fd",
+            "#29cdff",
+            "#78ff44",
+            "#ff718d",
+            "#fdff6a",
+            "#f9bec7",
+          ],
+        });
+      }
+      confettiFY();
+    </script>
+    <% } %>
+  </body>
+</html>

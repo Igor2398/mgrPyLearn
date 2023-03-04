@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/games-list-styles.css" />
+    <link rel="stylesheet" type="text/css" href="/universal.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <script src="/components/topbar.js" type="text/javascript" defer></script>
+    <title>Wyzwania</title>
+</head>
+<body>
+    <topbar-component challanges = <%= challangesCounter %> games = <%= gamesCounter %>></topbar-component>
+    <% if(games.length > 0) {%>
+        <div class="leaderboard">
+            <table>
+            <thead>
+                <tr>
+                <td></td>
+                <td>Nazwa użytkownika</td>
+                <td>Stawka</td>
+                <td>Wsp. wygranej</td>
+                <td>Wsp. przegranej</td>
+                <td>Zaakceptuj</td>
+                <td>Odrzuć</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% games.forEach( (item, index)=>{ %>
+                <tr>
+                <td id="winner"><%= index + 1 %></td>
+                <td>
+                    <div class="search-content">
+                        <img src="/images/profile1.jpeg" />
+                        <p> <%= users.find( obj => obj._id == games[index].users.find( id => id != currentUserId )).userName%> </p>
+                    </div>
+                </td>
+                <td>
+                    <p><%= games.find(obj => obj.users.includes(games[index].users.find( id => id != currentUserId))).stake %></p>
+                </td>
+                <td>
+                    <p> <%= users.find( obj => obj._id == games[index].users.find( id => id != currentUserId )).successFactor %> </p>
+                </td>
+                <td>
+                    <p> <%= users.find( obj => obj._id == games[index].users.find( id => id != currentUserId )).loseFactor %> </p>
+                </td>
+                <td> 
+                    <form action="/game" method="POST"> 
+                        <input type="hidden" name="currentUserId" value=<%= currentUserId %>>
+                        <input type="hidden" name="currentGameId" value=<%= games[index]._id %>> 
+                        <input type="hidden" name="userId" value=<%= users.find( obj => obj._id == games[index].users.find( id => id != currentUserId ))._id %>>
+                        <input type="hidden" name="response" value="Accept">
+                        <%if(!item.usersPlayed.includes(currentUserId)){%>
+                            <button title="Rozpocznij grę z <%= item.firstName %>" type="submit" class="fa fa-play"></button>
+                        <%} else {%>
+                            <button title="Juz zagrałeś swoją kolejkę! <%= item.firstName %>" type="submit" class="fa fa-play" disabled></button>
+                        <%}%>
+                    </form>
+                </td>
+                <td>
+                    <form action="/api/surrender?_method=PUT" method="POST">
+                        <input type="hidden" name="currentUserId" value=<%= currentUserId %>>
+                        <input type="hidden" name="currentGameId" value=<%= games[index]._id %>> 
+                        <input type="hidden" name="userId" value=<%= users.find( obj => obj._id == games[index].users.find( id => id != currentUserId ))._id %>>
+                        <input type="hidden" name="response" value="Surrender">
+                        <%if(!item.usersPlayed.includes(currentUserId)){%>
+                            <button title="Poddaj grę z <%= item.firstName %>" type="submit" class="fa fa-flag"></button>
+                        <%} else {%>
+                            <button title="Juz zagrałeś swoją kolejkę <%= item.firstName %>" type="submit" class="fa fa-flag" disabled></button>
+                        <% } %>
+                    </form>
+                </td>
+                </tr>
+                <% }) %>
+            </tbody>
+            </table>
+        </div>
+    <%}else {%>
+        <div id="back">
+          <h1>Obecnie nie toczysz pojedynków</h1>
+        </div>  
+    <%}%> 
+</body>
+</html>
